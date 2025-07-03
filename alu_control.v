@@ -72,6 +72,7 @@ imm[11:0] rs1 111 rd 0010011 ANDI
 
 
 //Operacoes Branch
+// Branch pega o valor zero alto da ALU
 // ALU_CO_i = 10
 
 // imm[12|10:5] rs2 rs1 000 imm[4:1|11] 1100011 BEQ
@@ -84,21 +85,21 @@ imm[11:0] rs1 111 rd 0010011 ANDI
 always @(*) begin
     case (ALU_CO_i)
 
-        LOAD_STORE : begin
+        LOAD_STORE : begin //Todas as funcoes somam
             case (FUNC3_i)
-                default: ALU_OP_o = 4'b0010;
+                default: ALU_OP_o = 4'b0010; 
             endcase
         end
 
         BRANCH : begin
             case (FUNC3_i)
-                3'b000: ALU_OP_o = 4'b0011; //BEQ Se for Igual
+                3'b000: ALU_OP_o = 4'b1010; //BEQ Se for Igual
                 3'b001: ALU_OP_o = 4'b0011; //BNE Se for Diferente
-                3'b100: ALU_OP_o = 4'b1110; //BLT Se for Menor
-                3'b101: ALU_OP_o = 4'b1100; //BGE Se for Maior ou Igual
-                3'b110: ALU_OP_o = 4'b1111; //BLTU Se for Menor Unsigned
-                3'b111: ALU_OP_o = 4'b1101; //BGEU Se for Maior Igual Unsigned
-                default: ALU_OP_o = 4'b0000;
+                3'b100: ALU_OP_o = 4'b1100; //BLT Se for Menor
+                3'b101: ALU_OP_o = 4'b1110; //BGE Se for Maior ou Igual
+                3'b110: ALU_OP_o = 4'b1101; //BLTU Se for Menor Unsigned
+                3'b111: ALU_OP_o = 4'b1111; //BGEU Se for Maior Igual Unsigned
+                default: ALU_OP_o = 4'b1010;
             endcase
         end 
         
